@@ -8,8 +8,8 @@ import (
 )
 
 type Task struct {
-	name string
-	done bool
+	Name string
+	Done bool
 }
 
 func main() {
@@ -55,7 +55,7 @@ func addTask(tasks *[]Task) {
 	scanner.Scan()
 	taskName := scanner.Text()
 
-	*tasks = append(*tasks, Task{name: taskName, done: false})
+	*tasks = append(*tasks, Task{Name: taskName, Done: false})
 	fmt.Println("New task added: ", taskName)
 }
 
@@ -63,10 +63,10 @@ func listTasks(tasks []Task) {
 	fmt.Println("\nThings to do: ")
 	for i, task := range tasks {
 		status := "Incomplete"
-		if task.done {
+		if task.Done {
 			status = "Completed"
 		}
-		fmt.Printf("%d. %s - %s\n", i+1, task.name, status)
+		fmt.Printf("%d. %s - %s\n", i+1, task.Name, status)
 	}
 }
 
@@ -81,12 +81,12 @@ func markComp(tasks *[]Task) {
 		return
 	}
 
-	if (*tasks)[taskNum-1].done {
+	if (*tasks)[taskNum-1].Done {
 		fmt.Println("This task is already marked as completed!")
 		return
 	}
 
-	(*tasks)[taskNum-1].done = true
+	(*tasks)[taskNum-1].Done = true
 	fmt.Println("Task marked as completed.")
 }
 
@@ -101,12 +101,12 @@ func markUncomp(tasks *[]Task) {
 		return
 	}
 
-	if !((*tasks)[taskNum-1].done) {
+	if !((*tasks)[taskNum-1].Done) {
 		fmt.Println("This task is already marked as incomplete!")
 		return
 	}
 
-	(*tasks)[taskNum-1].done = false
+	(*tasks)[taskNum-1].Done = false
 	fmt.Println("Task marked as uncompleted.")
 }
 
