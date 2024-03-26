@@ -38,7 +38,8 @@ func main() {
 		case 4:
 			markUncomp(&tasks)
 		case 5:
-			fmt.Println("Exiting the program...\n")
+			fmt.Println("\nExiting the program...")
+			fmt.Println()
 			os.Exit(0)
 		default:
 			fmt.Println("\nInvalid option!")
@@ -69,7 +70,7 @@ func listTasks(tasks []Task) {
 
 func markComp(tasks *[]Task) {
 	listTasks(*tasks)
-	fmt.Print("Enter the number of the task you want to mark as completed: ")
+	fmt.Print("\nEnter the number of the task you want to mark as completed: ")
 	var taskNum int
 	fmt.Scanln(&taskNum)
 
@@ -89,7 +90,7 @@ func markComp(tasks *[]Task) {
 
 func markUncomp(tasks *[]Task) {
 	listTasks(*tasks)
-	fmt.Print("Enter the number of the task you want to mark as uncompleted: ")
+	fmt.Print("\nEnter the number of the task you want to mark as uncompleted: ")
 	var taskNum int
 	fmt.Scanln(&taskNum)
 
