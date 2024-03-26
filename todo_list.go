@@ -126,5 +126,16 @@ func loadTasks() []Task {
 }
 
 func saveTasks(tasks []Task) {
+	file, err := os.Create("tasks.gob")
+	if err != nil {
+		fmt.Println("Error saving tasks: ", err)
+		return
+	}
+	defer file.Close()
 
+	encoder := gob.NewEncoder(file)
+	err = encoder.Encode(tasks)
+	if err != nil {
+		fmt.Println("Error encoding tasks: ", err)
+	}
 }
