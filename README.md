@@ -12,12 +12,6 @@ A simple command-line todo list manager
 
 * Golang
 
-### Installing
-
-```
-git clone https://github.com/MuhammetCanNamli/todo-list.git
-```
-
 ### Executing program
 
 The project can be run via terminal/cmd.
@@ -29,6 +23,13 @@ or
 ```
 go run todo_list.go
 ```
+
+## Project Features
+
+* The project is a simple CLI-based ToDo List application.
+* When you close the project, it saves the .gob file in the current directory, allowing you to continue where you left off when you open it again.
+* For now, there are options to add a task, mark a task as completed, mark a task as not completed, show tasks, and save tasks.
+I aim to continue the project in the future.
 
 ## Authors
 
