@@ -107,3 +107,11 @@ func markUncomp(tasks *[]Task) {
 	(*tasks)[taskNum-1].done = false
 	fmt.Println("Task marked as uncompleted.")
 }
+
+func loadTasks() []Task {
+
+}
+
+func saveTasks(tasks []Task) {
+
+}
