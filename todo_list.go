@@ -76,6 +76,11 @@ func markComp(tasks *[]Task) {
 		return
 	}
 
+	if (*tasks)[taskNum-1].done {
+		fmt.Println("This task has already been completed!")
+		return
+	}
+
 	(*tasks)[taskNum-1].done = true
 	fmt.Println("Task marked as completed.")
 }
@@ -88,6 +93,11 @@ func markUncomp(tasks *[]Task) {
 
 	if taskNum <= 0 || taskNum > len(*tasks) {
 		fmt.Println("Invalid task number!")
+		return
+	}
+
+	if !((*tasks)[taskNum-1].done) {
+		fmt.Println("This task has not been completed yet.!")
 		return
 	}
 
