@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/gob"
 	"fmt"
 	"os"
 )
@@ -109,7 +110,19 @@ func markUncomp(tasks *[]Task) {
 }
 
 func loadTasks() []Task {
+	file, err := os.OpenFile("tasks.gob", os.O_RDONLY, 0666)
+	if err != nil {
+		return []Task{}
+	}
+	defer file.Close()
 
+	var tasks []Task
+	decoder := gob.NewDecoder(file)
+	err = decoder.Decode(&tasks)
+	if err != nil {
+		return []Task{}
+	}
+	return tasks
 }
 
 func saveTasks(tasks []Task) {
