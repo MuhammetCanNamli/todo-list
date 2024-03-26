@@ -55,7 +55,14 @@ func addTask(tasks *[]Task) {
 }
 
 func listTasks(tasks []Task) {
-
+	fmt.Println("\nThings to do: ")
+	for i, task := range tasks {
+		status := "Incomplete"
+		if task.done {
+			status = "Completed"
+		}
+		fmt.Printf("%d. %s - %s\n", i+1, task.name, status)
+	}
 }
 
 func markComp(tasks *[]Task) {
