@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -44,7 +45,13 @@ func main() {
 }
 
 func addTask(tasks *[]Task) {
+	fmt.Print("Enter the to-do: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	taskName := scanner.Text()
 
+	*tasks = append(*tasks, Task{name: taskName, done: false})
+	fmt.Println("New task added: ", taskName)
 }
 
 func listTasks(tasks []Task) {
