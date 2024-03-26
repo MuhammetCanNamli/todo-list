@@ -15,13 +15,15 @@ func main() {
 	tasks := []Task{}
 
 	for {
-		fmt.Println("ToDo List")
+		fmt.Println("\n-_-_-_-ToDo List-_-_-_-")
+		fmt.Println("-----------------------")
 		fmt.Println("1. Add")
 		fmt.Println("2. Show")
 		fmt.Println("3. Mark as Completed")
 		fmt.Println("4. Mark as Uncompleted")
 		fmt.Println("5. Exit")
-		fmt.Println("Option: ")
+		fmt.Println("-----------------------")
+		fmt.Print("Option: ")
 
 		var choice int
 		fmt.Scanln(&choice)
@@ -36,16 +38,16 @@ func main() {
 		case 4:
 			markUncomp(&tasks)
 		case 5:
-			fmt.Println("Exiting the program...")
+			fmt.Println("Exiting the program...\n")
 			os.Exit(0)
 		default:
-			fmt.Println("Invalid option!")
+			fmt.Println("\nInvalid option!")
 		}
 	}
 }
 
 func addTask(tasks *[]Task) {
-	fmt.Print("Enter the to-do: ")
+	fmt.Print("\nEnter the to-do: ")
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 	taskName := scanner.Text()
@@ -77,7 +79,7 @@ func markComp(tasks *[]Task) {
 	}
 
 	if (*tasks)[taskNum-1].done {
-		fmt.Println("This task has already been completed!")
+		fmt.Println("This task is already marked as completed!")
 		return
 	}
 
@@ -97,7 +99,7 @@ func markUncomp(tasks *[]Task) {
 	}
 
 	if !((*tasks)[taskNum-1].done) {
-		fmt.Println("This task has not been completed yet.!")
+		fmt.Println("This task is already marked as incomplete!")
 		return
 	}
 
