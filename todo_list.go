@@ -13,7 +13,7 @@ type Task struct {
 }
 
 func main() {
-	tasks := []Task{}
+	tasks := loadTasks()
 
 	for {
 		fmt.Println("\n-_-_-_-ToDo List-_-_-_-")
@@ -40,6 +40,7 @@ func main() {
 			markUncomp(&tasks)
 		case 5:
 			fmt.Println("\nExiting the program...")
+			saveTasks(tasks)
 			fmt.Println()
 			os.Exit(0)
 		default:
