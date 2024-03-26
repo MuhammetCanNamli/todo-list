@@ -5,6 +5,11 @@ import (
 	"os"
 )
 
+type Task struct {
+	name string
+	done bool
+}
+
 func main() {
 	tasks := []Task{}
 
