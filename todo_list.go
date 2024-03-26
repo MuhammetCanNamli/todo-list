@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	tasks := []Task{}
 
 	for {
 		fmt.Println("ToDo List")
@@ -21,13 +22,13 @@ func main() {
 
 		switch choice {
 		case 1:
-			addTask()
+			addTask(&tasks)
 		case 2:
-			listTasks()
+			listTasks(tasks)
 		case 3:
-			markComp()
+			markComp(&tasks)
 		case 4:
-			markUncomp()
+			markUncomp(&tasks)
 		case 5:
 			fmt.Println("Exiting the program...")
 			os.Exit(0)
@@ -37,18 +38,18 @@ func main() {
 	}
 }
 
-func addTask() {
+func addTask(tasks *[]Task) {
 
 }
 
-func listTasks() {
+func listTasks(tasks []Task) {
 
 }
 
-func markComp() {
+func markComp(tasks *[]Task) {
 
 }
 
-func markUncomp() {
+func markUncomp(tasks *[]Task) {
 
 }
