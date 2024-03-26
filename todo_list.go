@@ -81,5 +81,16 @@ func markComp(tasks *[]Task) {
 }
 
 func markUncomp(tasks *[]Task) {
+	listTasks(*tasks)
+	fmt.Print("Enter the number of the task you want to mark as uncompleted: ")
+	var taskNum int
+	fmt.Scanln(&taskNum)
 
+	if taskNum <= 0 || taskNum > len(*tasks) {
+		fmt.Println("Invalid task number!")
+		return
+	}
+
+	(*tasks)[taskNum-1].done = false
+	fmt.Println("Task marked as uncompleted.")
 }
