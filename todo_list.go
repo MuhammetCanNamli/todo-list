@@ -22,7 +22,8 @@ func main() {
 		fmt.Println("2. Show")
 		fmt.Println("3. Mark as Completed")
 		fmt.Println("4. Mark as Uncompleted")
-		fmt.Println("5. Exit")
+		fmt.Println("5. Save")
+		fmt.Println("6. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -39,8 +40,9 @@ func main() {
 		case 4:
 			markUncomp(&tasks)
 		case 5:
-			fmt.Println("\nExiting the program...")
 			saveTasks(tasks)
+		case 6:
+			fmt.Println("\nExiting the program...")
 			fmt.Println()
 			os.Exit(0)
 		default:
@@ -139,4 +141,6 @@ func saveTasks(tasks []Task) {
 	if err != nil {
 		fmt.Println("Error encoding tasks: ", err)
 	}
+
+	fmt.Println("\nThe tasks have been saved successfully.")
 }
