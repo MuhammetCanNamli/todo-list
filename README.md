@@ -20,15 +20,15 @@ git clone https://github.com/MuhammetCanNamli/todo-list.git
 
 ### Executing program
 
-* The project can be run via terminal/cmd.
-  ```
-  go build todo_list.go
-  main
-  ```
-  or
-  ```
-  go run todo_list.go
-  ```
+The project can be run via terminal/cmd.
+```
+go build todo_list.go
+main
+```
+or
+```
+go run todo_list.go
+```
 
 ## Authors
 
