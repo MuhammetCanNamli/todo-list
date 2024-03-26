@@ -66,7 +66,18 @@ func listTasks(tasks []Task) {
 }
 
 func markComp(tasks *[]Task) {
+	listTasks(*tasks)
+	fmt.Print("Enter the number of the task you want to mark as completed: ")
+	var taskNum int
+	fmt.Scanln(&taskNum)
 
+	if taskNum <= 0 || taskNum > len(*tasks) {
+		fmt.Println("Invalid task number!")
+		return
+	}
+
+	(*tasks)[taskNum-1].done = true
+	fmt.Println("Task marked as completed.")
 }
 
 func markUncomp(tasks *[]Task) {
