@@ -28,7 +28,9 @@ go run todo_list.go
 
 * The project is a simple CLI-based ToDo List application.
 * When you close the project, it saves the .gob file in the current directory, allowing you to continue where you left off when you open it again.
-* For now, there are options to add a task, mark a task as completed, mark a task as not completed, show tasks, and save tasks.</br>
+* For now, there are options to add a task, mark a task as completed, mark a task as not completed, show tasks, and save tasks.
+
+
 I aim to continue the project in the future.
 
 ## Authors
