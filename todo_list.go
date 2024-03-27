@@ -18,12 +18,13 @@ func main() {
 	for {
 		fmt.Println("\n-_-_-_-ToDo List-_-_-_-")
 		fmt.Println("-----------------------")
-		fmt.Println("1. Add")
-		fmt.Println("2. Show")
-		fmt.Println("3. Mark as Completed")
-		fmt.Println("4. Mark as Uncompleted")
-		fmt.Println("5. Save")
-		fmt.Println("6. Exit")
+		fmt.Println("1. Add Task")
+		fmt.Println("2. Delete Task")
+		fmt.Println("3. Show Task/Tasks")
+		fmt.Println("4. Mark as Completed")
+		fmt.Println("5. Mark as Uncompleted")
+		fmt.Println("6. Save")
+		fmt.Println("7. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -34,18 +35,20 @@ func main() {
 		case 1:
 			addTask(&tasks)
 		case 2:
-			listTasks(tasks)
+			deleteTask(&tasks)
 		case 3:
-			markComp(&tasks)
+			listTasks(tasks)
 		case 4:
-			markUncomp(&tasks)
+			markComp(&tasks)
 		case 5:
-			saveTasks(tasks)
+			markUncomp(&tasks)
 		case 6:
+			saveTasks(tasks)
+		case 7:
 			fmt.Println("\nExiting the program...")
 			var confirm string
 			for true {
-				fmt.Print("Program state will be saved. Do you want to continue? (Y/N)")
+				fmt.Print("Program state will be saved. Do you want to continue? (Y/N) ")
 				fmt.Scanln(&confirm)
 				if confirm == "Y" || confirm == "y" {
 					saveTasks(tasks)
@@ -74,6 +77,22 @@ func addTask(tasks *[]Task) {
 
 	*tasks = append(*tasks, Task{Name: taskName, Done: false})
 	fmt.Println("New task added: ", taskName)
+}
+
+func deleteTask(tasks *[]Task) {
+	listTasks(*tasks)
+	fmt.Print("\nEnter the number of the task you want to delete: ")
+	var taskNum int
+	fmt.Scanln(&taskNum)
+
+	if taskNum <= 0 || taskNum > len(*tasks) {
+		fmt.Println("Invalid task number!")
+		return
+	}
+
+	taskToRemove := taskNum - 1
+	fmt.Printf("Removing task: %s\n", (*tasks)[taskToRemove].Name)
+	*tasks = append((*tasks)[:taskToRemove], (*tasks)[taskToRemove+1:]...)
 }
 
 func listTasks(tasks []Task) {
