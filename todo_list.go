@@ -79,6 +79,11 @@ func addTask(tasks *[]Task) {
 		scanner.Scan()
 		taskName := scanner.Text()
 
+		if taskName == "" {
+			fmt.Println("Task name cannot be empty! Please enter a valid task name.")
+			continue
+		}
+
 		found := false
 		for _, task := range *tasks {
 			if task.Name == taskName {
