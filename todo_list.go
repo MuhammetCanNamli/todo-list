@@ -43,6 +43,21 @@ func main() {
 			saveTasks(tasks)
 		case 6:
 			fmt.Println("\nExiting the program...")
+			var confirm string
+			for true {
+				fmt.Print("Program state will be saved. Do you want to continue? (Y/N)")
+				fmt.Scanln(&confirm)
+				if confirm == "Y" || confirm == "y" {
+					saveTasks(tasks)
+					fmt.Println("Program state saved.")
+					break
+				} else if confirm == "N" || confirm == "n" {
+					fmt.Println("Program state not saved.")
+					break
+				} else {
+					fmt.Println("Incorrect keystroke made!")
+				}
+			}
 			fmt.Println()
 			os.Exit(0)
 		default:
