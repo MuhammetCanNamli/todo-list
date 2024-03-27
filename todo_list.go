@@ -33,9 +33,11 @@ func main() {
 		fmt.Println("5. Mark as Completed")
 		fmt.Println("6. Mark as Uncompleted")
 		fmt.Println("7. Sort Tasks")
-		fmt.Println("8. Save")
-		fmt.Println("9. Delete Save File")
-		fmt.Println("10. Exit")
+		fmt.Println("8. Filter Tasks by Category")
+		fmt.Println("9. Filter Tasks by Tag")
+		fmt.Println("10. Save")
+		fmt.Println("11. Delete Save File")
+		fmt.Println("12. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -58,10 +60,14 @@ func main() {
 		case 7:
 			sortTasks(&tasks)
 		case 8:
-			saveTasks(tasks)
+			filterByCategory(&tasks)
 		case 9:
-			deleteSave(&tasks)
+			filterByTag(&tasks)
 		case 10:
+			saveTasks(tasks)
+		case 11:
+			deleteSave(&tasks)
+		case 12:
 			fmt.Println("\nExiting the program...")
 			var confirm string
 			for true {
@@ -285,6 +291,51 @@ func sortTasks(tasks *[]Task) {
 	}
 
 	listTasks(*tasks)
+}
+
+func filterByCategory(tasks *[]Task) {
+	fmt.Print("\nEnter category to filter tasks by: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	category := scanner.Text()
+
+	var filteredTasks []Task
+	for _, task := range *tasks {
+		if task.Category == category {
+			filteredTasks = append(filteredTasks, task)
+		}
+	}
+
+	if len(filteredTasks) == 0 {
+		fmt.Printf("No tasks found under category '%s'.\n", category)
+		return
+	}
+
+	listTasks(filteredTasks)
+}
+
+func filterByTag(tasks *[]Task) {
+	fmt.Print("\nEnter category to tag tasks by: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	tag := scanner.Text()
+
+	var filteredTasks []Task
+	for _, task := range *tasks {
+		for _, t := range task.Tags {
+			if t == tag {
+				filteredTasks = append(filteredTasks, task)
+				break
+			}
+		}
+	}
+
+	if len(filteredTasks) == 0 {
+		fmt.Printf("No tasks found under category '%s'.\n", tag)
+		return
+	}
+
+	listTasks(filteredTasks)
 }
 
 func loadTasks() []Task {
