@@ -24,7 +24,8 @@ func main() {
 		fmt.Println("4. Mark as Completed")
 		fmt.Println("5. Mark as Uncompleted")
 		fmt.Println("6. Save")
-		fmt.Println("7. Exit")
+		fmt.Println("7. Delete Save File")
+		fmt.Println("8. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -45,6 +46,8 @@ func main() {
 		case 6:
 			saveTasks(tasks)
 		case 7:
+			deleteSave(&tasks)
+		case 8:
 			fmt.Println("\nExiting the program...")
 			var confirm string
 			for true {
@@ -177,4 +180,27 @@ func saveTasks(tasks []Task) {
 	}
 
 	fmt.Println("\nThe tasks have been saved successfully.")
+}
+
+func deleteSave(tasks *[]Task) {
+	var confirm string
+	for true {
+		fmt.Print("\nAre you sure you want to delete save file? (Y/N) ")
+		fmt.Scanln(&confirm)
+		if confirm == "Y" || confirm == "y" {
+			err := os.Remove("tasks.gob")
+			if err != nil {
+				fmt.Println("Error deleting task file: ", err)
+				return
+			}
+			fmt.Println("Save deleted.")
+			*tasks = []Task{}
+			break
+		} else if confirm == "N" || confirm == "n" {
+			fmt.Println("Operation cancelled.")
+			break
+		} else {
+			fmt.Println("Incorrect keystroke made!")
+		}
+	}
 }
