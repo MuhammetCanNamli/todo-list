@@ -101,10 +101,14 @@ func addTask(tasks *[]Task) {
 
 		if exists {
 			fmt.Printf("Task '%s' already exists! Please add a different task.\n", taskName)
-		} else {
+			continue
+		}
+
+		deadlineInput := ""
+		for {
 			fmt.Print("Enter the deadline (YYYY-MM-DD): ")
 			scanner.Scan()
-			deadlineInput := scanner.Text()
+			deadlineInput = scanner.Text()
 
 			deadline, err := time.Parse("2006-01-02", deadlineInput)
 			if err != nil {
@@ -113,8 +117,8 @@ func addTask(tasks *[]Task) {
 			}
 
 			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline})
-			fmt.Println("New task added", taskName)
-			break
+			fmt.Println("New task added: ", taskName)
+			return
 		}
 	}
 }
