@@ -73,13 +73,28 @@ func main() {
 }
 
 func addTask(tasks *[]Task) {
-	fmt.Print("\nEnter the to-do: ")
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	taskName := scanner.Text()
+	for {
+		fmt.Print("\nEnter the to-do: ")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		taskName := scanner.Text()
 
-	*tasks = append(*tasks, Task{Name: taskName, Done: false})
-	fmt.Println("New task added: ", taskName)
+		found := false
+		for _, task := range *tasks {
+			if task.Name == taskName {
+				found = true
+				break
+			}
+		}
+
+		if found {
+			fmt.Printf("Task '%s' already exists! Please add a different task.\n", taskName)
+		} else {
+			*tasks = append(*tasks, Task{Name: taskName, Done: false})
+			fmt.Println("New task added", taskName)
+			break
+		}
+	}
 }
 
 func deleteTask(tasks *[]Task) {
