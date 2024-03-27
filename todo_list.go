@@ -256,10 +256,12 @@ func markUncomp(tasks *[]Task) {
 
 func sortTasks(tasks *[]Task) {
 	fmt.Println("\nSort Tasks by: ")
+	fmt.Println("---------------")
 	fmt.Println("1. Name")
 	fmt.Println("2. Deadline")
 	fmt.Println("3. Category")
 	fmt.Println("4. Tags")
+	fmt.Println("---------------")
 	fmt.Print("Option: ")
 
 	var choice int
