@@ -16,6 +16,7 @@ type Task struct {
 	Deadline time.Time
 	Category string
 	Tags     []string
+	Priority int
 }
 
 const taskFile = "task.gob"
@@ -138,6 +139,14 @@ func addTask(tasks *[]Task) {
 			tagsInput := scanner.Text()
 			tags := strings.Split(tagsInput, ",")
 
+			fmt.Print("Enter priority (1-5, 1 is lowest, 5 is highest): ")
+			var priority int
+			fmt.Scanln(&priority)
+			if priority < 1 || priority > 5 {
+				fmt.Println("Invalid priority! Please enter a priority between 1 and 5.")
+				continue
+			}
+
 			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline, Category: category, Tags: tags})
 			fmt.Println("New task added: ", taskName)
 			return
@@ -177,6 +186,9 @@ func listTasks(tasks []Task) {
 		}
 		if len(task.Tags) > 0 {
 			fmt.Printf(" [Tags: %s]", strings.Join(task.Tags, ", "))
+		}
+		if task.Priority > 0 {
+			fmt.Printf(" [Priority: %d]", task.Priority)
 		}
 		fmt.Println()
 	}
@@ -261,6 +273,7 @@ func sortTasks(tasks *[]Task) {
 	fmt.Println("2. Deadline")
 	fmt.Println("3. Category")
 	fmt.Println("4. Tags")
+	fmt.Println("5. Priority")
 	fmt.Println("---------------")
 	fmt.Print("Option: ")
 
@@ -288,6 +301,11 @@ func sortTasks(tasks *[]Task) {
 			return strings.Join((*tasks)[i].Tags, ", ") < strings.Join((*tasks)[j].Tags, ", ")
 		})
 		fmt.Println("Tasks sorted by tags.")
+	case 5:
+		sort.Slice(*tasks, func(i, j int) bool {
+			return (*tasks)[i].Priority > (*tasks)[j].Priority
+		})
+		fmt.Println("Tasks sorted by priority")
 	default:
 		fmt.Println("\nInvalid option!")
 	}
