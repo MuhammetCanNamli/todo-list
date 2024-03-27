@@ -28,7 +28,7 @@ go run todo_list.go
 
 * The project is a simple CLI-based ToDo List application.
 * What the user can do;
-  * Add a task
+  * Add a task (with category and tags)
   * Delete a task
   * Mark a task as completed
   * Mark as task as uncompleted
