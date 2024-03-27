@@ -163,19 +163,23 @@ func editDeadline(tasks *[]Task) {
 
 	taskIndex := taskNum - 1
 	fmt.Printf("Current deadline for task '%s': %s\n", (*tasks)[taskIndex].Name, (*tasks)[taskIndex].Deadline.Format("2006-01-02"))
-	fmt.Print("Enter the new deadline (YYYY-MM-DD): ")
+
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	newDeadlineInput := scanner.Text()
+	for {
+		fmt.Print("Enter the new deadline (YYYY-MM-DD): ")
+		scanner.Scan()
+		newDeadlineInput := scanner.Text()
 
-	newDeadline, err := time.Parse("2006-01-02", newDeadlineInput)
-	if err != nil {
-		fmt.Println("Invalid deadline format! Please enter he deadline in the format YYYY-MM-DD.")
-		return
+		newDeadline, err := time.Parse("2006-01-02", newDeadlineInput)
+		if err != nil {
+			fmt.Println("Invalid deadline format! Please enter he deadline in the format YYYY-MM-DD.")
+			continue
+		}
+
+		(*tasks)[taskIndex].Deadline = newDeadline
+		fmt.Printf("Deadline for task '%s' updated to: %s\n", (*tasks)[taskIndex].Name, newDeadline.Format("2006-01-02"))
+		break
 	}
-
-	(*tasks)[taskIndex].Deadline = newDeadline
-	fmt.Printf("Deadline for task '%s' updated to: %s\n", (*tasks)[taskIndex].Name, newDeadline.Format("2006-01-02"))
 }
 
 func markComp(tasks *[]Task) {
