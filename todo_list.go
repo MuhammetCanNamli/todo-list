@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 	"time"
 )
@@ -31,9 +32,10 @@ func main() {
 		fmt.Println("4. Edit Deadline")
 		fmt.Println("5. Mark as Completed")
 		fmt.Println("6. Mark as Uncompleted")
-		fmt.Println("7. Save")
-		fmt.Println("8. Delete Save File")
-		fmt.Println("9. Exit")
+		fmt.Println("7. Sort Tasks")
+		fmt.Println("8. Save")
+		fmt.Println("9. Delete Save File")
+		fmt.Println("10. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -54,10 +56,12 @@ func main() {
 		case 6:
 			markUncomp(&tasks)
 		case 7:
-			saveTasks(tasks)
+			sortTasks(&tasks)
 		case 8:
-			deleteSave(&tasks)
+			saveTasks(tasks)
 		case 9:
+			deleteSave(&tasks)
+		case 10:
 			fmt.Println("\nExiting the program...")
 			var confirm string
 			for true {
@@ -242,6 +246,45 @@ func markUncomp(tasks *[]Task) {
 
 	(*tasks)[taskNum-1].Done = false
 	fmt.Println("Task marked as uncompleted.")
+}
+
+func sortTasks(tasks *[]Task) {
+	fmt.Println("\nSort Tasks by: ")
+	fmt.Println("1. Name")
+	fmt.Println("2. Deadline")
+	fmt.Println("3. Category")
+	fmt.Println("4. Tags")
+	fmt.Print("Option: ")
+
+	var choice int
+	fmt.Scanln(&choice)
+
+	switch choice {
+	case 1:
+		sort.Slice(*tasks, func(i, j int) bool {
+			return (*tasks)[i].Name < (*tasks)[j].Name
+		})
+		fmt.Println("Tasks sorted by name.")
+	case 2:
+		sort.Slice(*tasks, func(i, j int) bool {
+			return (*tasks)[i].Deadline.Before((*tasks)[j].Deadline)
+		})
+		fmt.Println("Tasks sorted by deadline")
+	case 3:
+		sort.Slice(*tasks, func(i, j int) bool {
+			return (*tasks)[i].Category < (*tasks)[j].Category
+		})
+		fmt.Println("Tasks sorted by category.")
+	case 4:
+		sort.Slice(*tasks, func(i, j int) bool {
+			return strings.Join((*tasks)[i].Tags, ", ") < strings.Join((*tasks)[j].Tags, ", ")
+		})
+		fmt.Println("Tasks sorted by tags.")
+	default:
+		fmt.Println("\nInvalid option!")
+	}
+
+	listTasks(*tasks)
 }
 
 func loadTasks() []Task {
