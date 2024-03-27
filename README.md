@@ -36,6 +36,9 @@ go run todo_list.go
   * Save tasks (If you close the program, you will be able to access your tasks when you open it again.)
   * Delete save file
   * Deadline editing in tasks
+  * Sort tasks by name, deadline, category and tag.
+  * Filter tasks by categories
+  * Filter tasks by tags
 
 
 I aim to continue the project in the future.
