@@ -25,11 +25,12 @@ func main() {
 		fmt.Println("1. Add Task")
 		fmt.Println("2. Delete Task")
 		fmt.Println("3. Show Task/Tasks")
-		fmt.Println("4. Mark as Completed")
-		fmt.Println("5. Mark as Uncompleted")
-		fmt.Println("6. Save")
-		fmt.Println("7. Delete Save File")
-		fmt.Println("8. Exit")
+		fmt.Println("4. Edit Deadline")
+		fmt.Println("5. Mark as Completed")
+		fmt.Println("6. Mark as Uncompleted")
+		fmt.Println("7. Save")
+		fmt.Println("8. Delete Save File")
+		fmt.Println("9. Exit")
 		fmt.Println("-----------------------")
 		fmt.Print("Option: ")
 
@@ -44,14 +45,16 @@ func main() {
 		case 3:
 			listTasks(tasks)
 		case 4:
-			markComp(&tasks)
+			editDeadline(&tasks)
 		case 5:
-			markUncomp(&tasks)
+			markComp(&tasks)
 		case 6:
-			saveTasks(tasks)
+			markUncomp(&tasks)
 		case 7:
-			deleteSave(&tasks)
+			saveTasks(tasks)
 		case 8:
+			deleteSave(&tasks)
+		case 9:
 			fmt.Println("\nExiting the program...")
 			var confirm string
 			for true {
@@ -145,6 +148,34 @@ func listTasks(tasks []Task) {
 		}
 		fmt.Println()
 	}
+}
+
+func editDeadline(tasks *[]Task) {
+	listTasks(*tasks)
+	fmt.Print("\nEnter the number of the task you want to edit the deadline for: ")
+	var taskNum int
+	fmt.Scanln(&taskNum)
+
+	if taskNum <= 0 || taskNum > len(*tasks) {
+		fmt.Println("Invalid task number")
+		return
+	}
+
+	taskIndex := taskNum - 1
+	fmt.Printf("Current deadline for task '%s': %s\n", (*tasks)[taskIndex].Name, (*tasks)[taskIndex].Deadline.Format("2006-01-02"))
+	fmt.Print("Enter the new deadline (YYYY-MM-DD): ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	newDeadlineInput := scanner.Text()
+
+	newDeadline, err := time.Parse("2006-01-02", newDeadlineInput)
+	if err != nil {
+		fmt.Println("Invalid deadline format! Please enter he deadline in the format YYYY-MM-DD.")
+		return
+	}
+
+	(*tasks)[taskIndex].Deadline = newDeadline
+	fmt.Printf("Deadline for task '%s' updated to: %s\n", (*tasks)[taskIndex].Name, newDeadline.Format("2006-01-02"))
 }
 
 func markComp(tasks *[]Task) {
