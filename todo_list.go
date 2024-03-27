@@ -5,12 +5,16 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"time"
 )
 
 type Task struct {
-	Name string
-	Done bool
+	Name     string
+	Done     bool
+	Deadline time.Time
 }
+
+const taskFile = "task.gob"
 
 func main() {
 	tasks := loadTasks()
@@ -73,9 +77,9 @@ func main() {
 }
 
 func addTask(tasks *[]Task) {
+	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("\nEnter the to-do: ")
-		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		taskName := scanner.Text()
 
@@ -84,18 +88,28 @@ func addTask(tasks *[]Task) {
 			continue
 		}
 
-		found := false
+		exists := false
 		for _, task := range *tasks {
 			if task.Name == taskName {
-				found = true
+				exists = true
 				break
 			}
 		}
 
-		if found {
+		if exists {
 			fmt.Printf("Task '%s' already exists! Please add a different task.\n", taskName)
 		} else {
-			*tasks = append(*tasks, Task{Name: taskName, Done: false})
+			fmt.Print("Enter the deadline (YYYY-MM-DD): ")
+			scanner.Scan()
+			deadlineInput := scanner.Text()
+
+			deadline, err := time.Parse("2006-01-02", deadlineInput)
+			if err != nil {
+				fmt.Println("Invalid deadline format! Please enter the deadline in the format YYYY-MM-DD.")
+				continue
+			}
+
+			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline})
 			fmt.Println("New task added", taskName)
 			break
 		}
@@ -126,6 +140,10 @@ func listTasks(tasks []Task) {
 			status = "Completed"
 		}
 		fmt.Printf("%d. %s - %s\n", i+1, task.Name, status)
+		if !task.Done && !task.Deadline.IsZero() {
+			fmt.Printf(" (Deadline: %s)", task.Deadline.Format("2006-01-02"))
+		}
+		fmt.Println()
 	}
 }
 
@@ -170,7 +188,7 @@ func markUncomp(tasks *[]Task) {
 }
 
 func loadTasks() []Task {
-	file, err := os.OpenFile("tasks.gob", os.O_RDONLY, 0666)
+	file, err := os.OpenFile(taskFile, os.O_RDONLY, 0666)
 	if err != nil {
 		return []Task{}
 	}
@@ -186,7 +204,7 @@ func loadTasks() []Task {
 }
 
 func saveTasks(tasks []Task) {
-	file, err := os.Create("tasks.gob")
+	file, err := os.Create(taskFile)
 	if err != nil {
 		fmt.Println("Error saving tasks: ", err)
 		return
@@ -208,7 +226,7 @@ func deleteSave(tasks *[]Task) {
 		fmt.Print("\nAre you sure you want to delete save file? (Y/N) ")
 		fmt.Scanln(&confirm)
 		if confirm == "Y" || confirm == "y" {
-			err := os.Remove("tasks.gob")
+			err := os.Remove(taskFile)
 			if err != nil {
 				fmt.Println("Error deleting task file: ", err)
 				return
