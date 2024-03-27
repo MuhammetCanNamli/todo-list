@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -12,6 +13,8 @@ type Task struct {
 	Name     string
 	Done     bool
 	Deadline time.Time
+	Category string
+	Tags     []string
 }
 
 const taskFile = "task.gob"
@@ -104,7 +107,7 @@ func addTask(tasks *[]Task) {
 			continue
 		}
 
-		deadlineInput := ""
+		var deadlineInput string
 		for {
 			fmt.Print("Enter the deadline (YYYY-MM-DD): ")
 			scanner.Scan()
@@ -116,7 +119,16 @@ func addTask(tasks *[]Task) {
 				continue
 			}
 
-			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline})
+			fmt.Print("Enter the category (optional): ")
+			scanner.Scan()
+			category := scanner.Text()
+
+			fmt.Print("Enter comma-separated tags (optional): ")
+			scanner.Scan()
+			tagsInput := scanner.Text()
+			tags := strings.Split(tagsInput, ",")
+
+			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline, Category: category, Tags: tags})
 			fmt.Println("New task added: ", taskName)
 			return
 		}
@@ -149,6 +161,12 @@ func listTasks(tasks []Task) {
 		fmt.Printf("%d. %s - %s\n", i+1, task.Name, status)
 		if !task.Done && !task.Deadline.IsZero() {
 			fmt.Printf(" (Deadline: %s)", task.Deadline.Format("2006-01-02"))
+		}
+		if task.Category != "" {
+			fmt.Printf(" [Category : %s]", task.Category)
+		}
+		if len(task.Tags) > 0 {
+			fmt.Printf(" [Tags: %s]", strings.Join(task.Tags, ", "))
 		}
 		fmt.Println()
 	}
