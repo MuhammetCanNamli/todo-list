@@ -139,11 +139,6 @@ func addTask(tasks *[]Task) {
 			tagsInput := scanner.Text()
 			tags := strings.Split(tagsInput, ",")
 
-			/*
-				It does not print the priority level next to the task.
-				There is a logical error somewhere, but I can't figure it out at the moment.
-				If you have any suggestions, don't hesitate to contact us.
-			*/
 			fmt.Print("Enter priority (1-5, 1 is lowest, 5 is highest): ")
 			var priority int
 			fmt.Scanln(&priority)
@@ -152,7 +147,7 @@ func addTask(tasks *[]Task) {
 				continue
 			}
 
-			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline, Category: category, Tags: tags})
+			*tasks = append(*tasks, Task{Name: taskName, Done: false, Deadline: deadline, Category: category, Tags: tags, Priority: priority})
 			fmt.Println("New task added: ", taskName)
 			return
 		}
@@ -192,7 +187,7 @@ func listTasks(tasks []Task) {
 		if len(task.Tags) > 0 {
 			fmt.Printf(" [Tags: %s]", strings.Join(task.Tags, ", "))
 		}
-		if task.Priority > 0 { // not shown on screen
+		if task.Priority > 0 {
 			fmt.Printf(" [Priority: %d]", task.Priority)
 		}
 		fmt.Println()
@@ -306,7 +301,7 @@ func sortTasks(tasks *[]Task) {
 			return strings.Join((*tasks)[i].Tags, ", ") < strings.Join((*tasks)[j].Tags, ", ")
 		})
 		fmt.Println("Tasks sorted by tags.")
-	case 5: // not shown on screen
+	case 5:
 		sort.Slice(*tasks, func(i, j int) bool {
 			return (*tasks)[i].Priority > (*tasks)[j].Priority
 		})
