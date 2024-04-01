@@ -49,4 +49,5 @@ I aim to continue the project in the future.
 [Muhammet Can Namli](https://www.linkedin.com/in/muhammet-can-naml%C4%B1-9556311b9/)
 
 ## Help
-This is my first Golang project. If you have suggestions and recommendations, please contact me.
+This is my first Golang project. If you have suggestions and recommendations, please contact me.</br>
+I would appreciate your support to make the project more modular.
