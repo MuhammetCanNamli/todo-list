@@ -39,6 +39,7 @@ go run todo_list.go
   * Sort tasks by name, deadline, category and tag.
   * Filter tasks by categories
   * Filter tasks by tags
+  * Filter tasks by priority
 
 
 I aim to continue the project in the future.
