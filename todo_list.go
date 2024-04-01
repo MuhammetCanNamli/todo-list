@@ -192,7 +192,7 @@ func listTasks(tasks []Task) {
 		if len(task.Tags) > 0 {
 			fmt.Printf(" [Tags: %s]", strings.Join(task.Tags, ", "))
 		}
-		if task.Priority > 0 {
+		if task.Priority > 0 { // not shown on screen
 			fmt.Printf(" [Priority: %d]", task.Priority)
 		}
 		fmt.Println()
@@ -306,7 +306,7 @@ func sortTasks(tasks *[]Task) {
 			return strings.Join((*tasks)[i].Tags, ", ") < strings.Join((*tasks)[j].Tags, ", ")
 		})
 		fmt.Println("Tasks sorted by tags.")
-	case 5:
+	case 5: // not shown on screen
 		sort.Slice(*tasks, func(i, j int) bool {
 			return (*tasks)[i].Priority > (*tasks)[j].Priority
 		})
